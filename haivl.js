@@ -15,7 +15,8 @@ page_mode_activate(haivl_mode);
 var haivl = {};
 haivl.selector = {};
 haivl.selector.nav = "#menuBar>li>a"
-haivl.name = ["New", "Unread", "Vote","Video","Hot"];
+haivl.selector.seemore = "#leftColumn>.mainBox>a"
+haivl.name = ["New", "Unread", "Vote","Video","Hot", "SeeMore"];
 haivl.doClick = function(I, index ){
   var document = I.buffer.document;
   var button_array = document.querySelectorAll(haivl.selector.nav);
@@ -24,6 +25,15 @@ haivl.doClick = function(I, index ){
 	dom_node_click(button_array[index]);
   }else {	
  	I.minibuffer.message("Button: " + haivl.name[index] + " not found.");
+  }
+}
+haivl.doClickSeeMore = function(I){
+  var document = I.buffer.document;
+  var button = document.querySelector(haivl.selector.seemore);
+  if(button != null){
+	dom_node_click(button);
+  }else {	
+ 	I.minibuffer.message("Button: " + haivl.name[5] + " not found.");
   }
 }
 interactive("haivl-new","new feeds", function(I){
@@ -41,3 +51,6 @@ interactive("haivl-video", "video feeds", function(I){
 interactive("haivl-hot", "hot feeds", function(I){
   haivl.doClick(I,4);
 });
+interactive("haivl-seemore", "see more feeds",function(I){
+  haivl.doClickSeeMore(I);
+})
